@@ -15,7 +15,7 @@
 
 
 <div class="container">
-    <form method="POST" class="form-horizontal" action="{% url 'login' %}">
+    <form method="POST" class="form-horizontal" action="{% url 'login' %}" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="form-group">
         <label class="control-label col-xs-2">name</label>

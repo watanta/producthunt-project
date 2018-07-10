@@ -1,5 +1,58 @@
 {% extends 'base.html' %}
 
 {% block content %}
-home!
+
+{% if error %}
+{{ error }}
+<br />
+<br />
+{% endif %}
+
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+
+        <!-- Blog Entries Column -->
+        <div class="col-md-8">
+
+          <h1 class="my-4">Product Hunt!
+          </h1>
+          
+          {% for product in products.all  %}
+
+          <!-- Blog Post -->
+          <div class="card mb-4">
+            <img class="card-img-top" src={{product.icon.url}} alt="Card image cap">
+            <div class="card-body">
+              <h2 class="card-title">{{ product.title }}</h2>
+              <p class="card-text">{{ product.body }}</p>
+              <a href="{% url 'detail' product.id %}" class="btn btn-primary">Read More </a>
+              <a href="javascript:{document.getElementById('upvote{{ product.id }}').submit()}"}><button type="button" class="btn btn-primary  "><i class="fas fa-thumbs-up"></i> Upvote{{  product.votes_total }}</button></a>
+
+            </div>
+            <div class="card-footer text-muted">
+              {{ product.pub_date }} by
+              <a href="#">{{ product.hunter  }}</a>
+            </div>
+          </div>
+          
+          <form id="upvote{{ product.id }}" method="POST" action="{% url 'upvote' product.id %}">
+            {% csrf_token %}
+            <input type="hidden">
+          </form>
+
+          {% endfor  %}
+          
+        </div>
+      </div>
+      
+    </div>
+
+
+
+
+
+
 {% endblock %}
